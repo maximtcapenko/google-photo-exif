@@ -38,6 +38,10 @@ pip install -r requirements.txt
 python ./src/main.py --path PATH
 ```
 
+## Build exe single file
+```bash
+pyinstaller --name google-write-exif  --onefile src/main.py   
+```
 ## Deactivate Virtual Environment
 ```bash
 deactivate

@@ -9,10 +9,10 @@ from pathlib import Path
 parser = argparse.ArgumentParser()
 parser.add_argument('--path', dest='path', required=True, type=str)
 
-def getMetadataFiles(entries: list[Path]):
+def get_metadata_files(entries: list[Path]):
     return [entry for entry in entries if entry.is_file() and entry.name.endswith('.json')]
 
-def getImageFiles(entries: list[Path]):
+def get_image_files(entries: list[Path]):
     return [entry for entry in entries if entry.is_file() and entry.name.endswith('.jpg')]
 
 class Json:
@@ -39,8 +39,8 @@ def process_file(metadata, file_path: Path):
         piexif.insert(exif_bytes, f'{file_path}')
 
 def walk(path):
-    metadata_files = getMetadataFiles(Path(path).iterdir())
-    image_files = getImageFiles(Path(path).iterdir())
+    metadata_files = get_metadata_files(Path(path).iterdir())
+    image_files = get_image_files(Path(path).iterdir())
     dirs = [entry.name for entry in Path(path).iterdir() if entry.is_dir()]
 
     files = list(map(lambda x: ImageMetaPair(x, next(filter(lambda m: m.name.startswith(x.name), metadata_files), None)), image_files))
@@ -52,7 +52,6 @@ def walk(path):
 
     for dir in dirs:
         walk(dir)
-
 
 def main():
     args = parser.parse_args()
